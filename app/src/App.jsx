@@ -25,24 +25,19 @@ const initialCategories = [
 function App() {
   const [categories, setCategories] = useState(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [formData, setFormData] = useState({
-    count: 0,
-    frequency: 0,
-  });
   const [formOpen, setFormOpen] = useState(false);
 
   function handleSelectedCategory(category) {
     setSelectedCategory(category.id === selectedCategory?.id ? null : category);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(formData);
-    setFormOpen(false);
-  }
-
   function handleToggle() {
     setFormOpen(!formOpen);
+  }
+
+  function handleUpdateCategory(categoryUpdate) {
+    console.log(categoryUpdate);
+    setFormOpen(false);
   }
 
   return (
@@ -56,10 +51,9 @@ function App() {
       <div>
         <Data category={selectedCategory} />
         <Dialog
-          formData={formData}
-          onSubmit={handleSubmit}
           formOpen={formOpen}
           categories={categories}
+          onCategoryUpdate={handleUpdateCategory}
         />
       </div>
     </div>
@@ -114,22 +108,29 @@ function Data({ category }) {
   );
 }
 
-function Dialog({ onSubmit, formOpen, categories }) {
+function Dialog({ formOpen, categories, onCategoryUpdate }) {
   const [count, setCount] = useState("");
   const [frequency, setFrequency] = useState("");
-  const [categorySelected, setCategorySelected] = useState("");
+  const [categorySelected, setCategorySelected] = useState("Medicine");
 
   if (formOpen === false) return;
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!count || !frequency) return;
+    onCategoryUpdate([categorySelected, count, frequency]);
+  }
+
   return (
-    <form className="dialog" onSubmit={onSubmit}>
+    <form className="dialog" onSubmit={handleSubmit}>
       <label>Category</label>
       <select
         value={categorySelected}
         onChange={(e) => setCategorySelected(e.target.value)}
       >
-        {categories.map((category, index) => (
-          <option key={index} value={category.category}>
+        {categories.map((category) => (
+          <option key={category.id} value={category.category}>
             {category.category}
           </option>
         ))}
