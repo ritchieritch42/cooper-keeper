@@ -25,9 +25,18 @@ const initialCategories = [
 function App() {
   const [categories, setCategories] = useState(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [formData, setFormData] = useState({
+    count: 0,
+    frequency: 0,
+  });
 
   function handleSelectedCategory(category) {
     setSelectedCategory(category.id === selectedCategory?.id ? null : category);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(formData);
   }
 
   return (
@@ -36,7 +45,10 @@ function App() {
         categories={categories}
         onCategorySelect={handleSelectedCategory}
       />
-      <Data category={selectedCategory} />
+      <div>
+        <Data category={selectedCategory} />
+        <Dialog formData={formData} onSubmit={handleSubmit} />
+      </div>
     </div>
   );
 }
@@ -44,6 +56,7 @@ function App() {
 function Categories({ categories, onCategorySelect }) {
   return (
     <div className="categories">
+      <h2>Cooper's Needs</h2>
       {categories.map((category) => (
         <Category
           key={category.id}
@@ -52,6 +65,7 @@ function Categories({ categories, onCategorySelect }) {
           onCategorySelect={onCategorySelect}
         />
       ))}
+      <button className="update-coopers-needs">Update Cooper's Needs</button>
     </div>
   );
 }
@@ -82,6 +96,30 @@ function Data({ category }) {
         </li>
       </ul>
     </div>
+  );
+}
+
+function Dialog({ formData, onSubmit }) {
+  const Range = [...Array(6).keys()];
+  const [count, setCount] = useState(0);
+  const [frequency, setFrequency] = useState(0);
+
+  return (
+    <form className="dialog" onSubmit={onSubmit}>
+      <label>Count</label>
+      <select value={count} onChange={(e) => setCount(e.target.value)}>
+        {Range.map((number, index) => (
+          <option key={index}>{number}</option>
+        ))}
+      </select>
+      <label>Frequency</label>
+      <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
+        {Range.map((number, index) => (
+          <option key={index}>{number}</option>
+        ))}
+      </select>
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 

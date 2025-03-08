@@ -3,35 +3,46 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: flex;
+  flex-direction: row;
 }
 
 body {
   background-color: #2c3930;
   font-family: Arial, sans-serif;
+  margin: 0;
+  display: flex;
+  height: 100vh;
 }
 
 .app {
+  flex: 1;
+  display: flex;
+  align-items: flex-start; /* Align items to the start vertically */
+  justify-content: center;
+  padding-left: 200px; /* Offset for fixed categories */
+  gap: 20px; /* Add spacing between the data and dialog forms */
+}
+
+.categories {
+  position: fixed;
+  left: 0;
+  top: 0;
   height: 100%;
-  width: 100%;
+  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: #3f4f44;
+  padding: 20px;
+  gap: 20px;
 }
 
-/* Categories container */
-.categories {
-  display: flex;
-  flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
-  gap: 45px;
-  justify-content: center;
-}
-
-/* Category button */
 .category {
   background-color: #3f4f44;
   color: #dcd7c9;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   padding: 12px 20px;
   font-size: 1.1rem;
   border-radius: 8px;
@@ -43,10 +54,8 @@ body {
 
 .category:hover {
   border-color: #a27b5c;
-  transform: scale(1.05);
 }
 
-/* Selected category data */
 .data {
   background-color: #3f4f44;
   border-radius: 25px;
@@ -58,7 +67,6 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Cooper needs text */
 .cooper-needs {
   color: #dcd7c9;
   font-size: 1.4rem;
@@ -66,7 +74,15 @@ body {
   margin-bottom: 10px;
 }
 
-/* Data list */
+.update-coopers-needs {
+  color: #dcd7c9;
+  background-color: #2c3930;
+}
+
+.update-coopers-needs:hover {
+  border-color: #a27b5c;
+}
+
 .data-list {
   color: #dcd7c9;
   list-style: none;
@@ -78,19 +94,46 @@ body {
   margin: 10px 0;
 }
 
-/* Responsive adjustments */
+.dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+  background-color: #a27b5c;
+  gap: 10px;
+  border-radius: 25px;
+}
+
+.dialog-input {
+  margin: 5px;
+  background-color: #dcd7c9;
+  border-radius: 25px;
+  color: black;
+}
+
+.dialog-input:focus {
+  outline: none;
+  border: none;
+}
+
 @media (max-width: 768px) {
   .categories {
-    flex-direction: column;
-    align-items: center;
+    width: 100px;
   }
 
   .category {
-    width: 100%;
-    max-width: 250px;
+    font-size: 0.9rem;
+    min-width: auto;
   }
 
-  .data {
-    max-width: 90%;
+  .app {
+    padding-left: 120px;
+    flex-direction: column; /* Stack the forms vertically for smaller screens */
+  }
+
+  .data,
+  .dialog {
+    width: 100%; /* Ensure both forms take full width on small screens */
   }
 }
