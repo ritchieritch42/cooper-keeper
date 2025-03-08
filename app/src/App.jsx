@@ -38,6 +38,7 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
     console.log(formData);
+    setFormOpen(false);
   }
 
   function handleToggle() {
@@ -50,6 +51,7 @@ function App() {
         categories={categories}
         onCategorySelect={handleSelectedCategory}
         onToggle={handleToggle}
+        formOpen={formOpen}
       />
       <div>
         <Data category={selectedCategory} />
@@ -57,13 +59,14 @@ function App() {
           formData={formData}
           onSubmit={handleSubmit}
           formOpen={formOpen}
+          categories={categories}
         />
       </div>
     </div>
   );
 }
 
-function Categories({ categories, onCategorySelect, onToggle }) {
+function Categories({ categories, onCategorySelect, onToggle, formOpen }) {
   return (
     <div className="categories">
       <h2>Cooper's Needs</h2>
@@ -76,7 +79,7 @@ function Categories({ categories, onCategorySelect, onToggle }) {
         />
       ))}
       <button className="update-coopers-needs" onClick={onToggle}>
-        Update Cooper's Needs
+        {formOpen ? "Close Update" : "Update a Need"}
       </button>
     </div>
   );
@@ -111,19 +114,56 @@ function Data({ category }) {
   );
 }
 
-function Dialog({ onSubmit, formOpen }) {
-  const Range = [...Array(6).keys()];
-  const [count, setCount] = useState(0);
-  const [frequency, setFrequency] = useState(0);
+function Dialog({ onSubmit, formOpen, categories }) {
+  const [count, setCount] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [categorySelected, setCategorySelected] = useState("");
 
   if (formOpen === false) return;
 
   return (
     <form className="dialog" onSubmit={onSubmit}>
+      <label>Category</label>
+      <select
+        value={categorySelected}
+        onChange={(e) => setCategorySelected(e.target.value)}
+      >
+        {categories.map((category, index) => (
+          <option key={index} value={category.category}>
+            {category.category}
+          </option>
+        ))}
+      </select>
       <label>Count</label>
-      <input></input>
+      <input
+        className="dialog-input"
+        type="text"
+        value={count}
+        onChange={(e) =>
+          setCount(
+            isNaN(e.target.value)
+              ? ""
+              : Number(e.target.value) > 5
+              ? count
+              : Number(e.target.value)
+          )
+        }
+      ></input>
       <label>Frequency</label>
-      <input></input>
+      <input
+        className="dialog-input"
+        type="text"
+        value={frequency}
+        onChange={(e) =>
+          setFrequency(
+            isNaN(e.target.value)
+              ? ""
+              : Number(e.target.value) > 14
+              ? frequency
+              : Number(e.target.value)
+          )
+        }
+      ></input>
       <button className="submit" type="submit">
         Submit
       </button>

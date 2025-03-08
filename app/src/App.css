@@ -101,15 +101,8 @@ body {
   align-items: center;
   margin: 30px;
   background-color: #a27b5c;
-  gap: 10px;
+  gap: 2px;
   border-radius: 25px;
-}
-
-.dialog-input {
-  margin: 5px;
-  background-color: #dcd7c9;
-  border-radius: 25px;
-  color: black;
 }
 
 .dialog-input:focus {
@@ -119,6 +112,7 @@ body {
 
 .submit {
   margin: 10px;
+  background-color: #3f4f44;
 }
 
 @media (max-width: 768px) {
