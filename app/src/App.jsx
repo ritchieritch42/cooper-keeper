@@ -25,8 +25,8 @@ function Category() {
 
 function Data() {
   return (
-    <div>
-      <ul>
+    <div className="data">
+      <ul className="data-list">
         <li>X</li>
         <li>X</li>
         <li>X</li>

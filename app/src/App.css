@@ -28,3 +28,12 @@ body {
 .category:hover {
   border-color: #a27b5c;
 }
+
+.data {
+  background-color: #3f4f44;
+  border-radius: 25px;
+}
+
+.data-list {
+  color: #dcd7c9;
+}
