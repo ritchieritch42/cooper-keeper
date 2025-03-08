@@ -26,8 +26,8 @@ function App() {
   const [categories, setCategories] = useState(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  function handleSelectedCategory(id) {
-    setSelectedCategory(categories.find((category) => category.id === id));
+  function handleSelectedCategory(category) {
+    setSelectedCategory(category.id === selectedCategory?.id ? null : category);
   }
 
   return (
@@ -48,7 +48,7 @@ function Categories({ categories, onCategorySelect }) {
         <Category
           key={category.id}
           name={category.category}
-          id={category.id}
+          category={category}
           onCategorySelect={onCategorySelect}
         />
       ))}
@@ -56,13 +56,9 @@ function Categories({ categories, onCategorySelect }) {
   );
 }
 
-function Category({ name, id, onCategorySelect }) {
+function Category({ name, category, onCategorySelect }) {
   return (
-    <button
-      value={id}
-      className="category"
-      onClick={(e) => onCategorySelect(Number(e.target.value))}
-    >
+    <button className="category" onClick={() => onCategorySelect(category)}>
       {name}
     </button>
   );
