@@ -99,9 +99,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 30px;
+  margin: 10px;
+  height: auto;
   background-color: #a27b5c;
-  gap: 2px;
   border-radius: 25px;
 }
 
@@ -110,9 +110,17 @@ body {
   border: none;
 }
 
+.dialog-preface {
+  margin: 10px;
+}
+
 .submit {
   margin: 10px;
   background-color: #3f4f44;
+}
+
+.submit:hover {
+  border-color: white;
 }
 
 @media (max-width: 768px) {

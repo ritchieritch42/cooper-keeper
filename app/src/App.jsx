@@ -35,8 +35,21 @@ function App() {
     setFormOpen(!formOpen);
   }
 
-  function handleUpdateCategory(categoryUpdate) {
-    console.log(categoryUpdate);
+  function handleUpdateCategory(categoryToUpdate) {
+    console.log(categoryToUpdate);
+
+    setCategories(
+      categories.map((category) => {
+        category.id === categoryToUpdate.id
+          ? {
+              ...category,
+              count: categoryToUpdate.count,
+              frequency: categoryToUpdate.frequency,
+            }
+          : category;
+      })
+    );
+
     setFormOpen(false);
   }
 
@@ -111,7 +124,7 @@ function Data({ category }) {
 function Dialog({ formOpen, categories, onCategoryUpdate }) {
   const [count, setCount] = useState("");
   const [frequency, setFrequency] = useState("");
-  const [categorySelected, setCategorySelected] = useState("Medicine");
+  const [categorySelected, setCategorySelected] = useState(10001);
 
   if (formOpen === false) return;
 
@@ -119,18 +132,26 @@ function Dialog({ formOpen, categories, onCategoryUpdate }) {
     e.preventDefault();
 
     if (!count || !frequency) return;
-    onCategoryUpdate([categorySelected, count, frequency]);
+    onCategoryUpdate({
+      id: categorySelected,
+      count: count,
+      frequency: frequency,
+    });
   }
 
   return (
     <form className="dialog" onSubmit={handleSubmit}>
+      <h4>Update a Category</h4>
+      <p className="dialog-preface">
+        <em>Count and Frequency Must be Greater than Zero</em>
+      </p>
       <label>Category</label>
       <select
         value={categorySelected}
         onChange={(e) => setCategorySelected(e.target.value)}
       >
         {categories.map((category) => (
-          <option key={category.id} value={category.category}>
+          <option key={category.id} value={category.id}>
             {category.category}
           </option>
         ))}
