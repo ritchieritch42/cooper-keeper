@@ -19,8 +19,8 @@ body {
   flex: 1;
   display: flex;
   align-items: flex-start; /* Align items to the start vertically */
-  justify-content: center;
-  padding-left: 200px; /* Offset for fixed categories */
+  justify-content: space-evenly;
+  /* padding-left: 200px; Offset for fixed categories */
   gap: 20px; /* Add spacing between the data and dialog forms */
 }
 
@@ -37,6 +37,10 @@ body {
   background-color: #3f4f44;
   padding: 20px;
   gap: 20px;
+}
+
+.categories-header {
+  color: white;
 }
 
 .category {
@@ -117,6 +121,7 @@ body {
 .submit {
   margin: 10px;
   background-color: #3f4f44;
+  color: white;
 }
 
 .submit:hover {

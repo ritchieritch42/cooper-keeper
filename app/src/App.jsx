@@ -1,4 +1,3 @@
-import "./App.css";
 import { useState } from "react";
 
 const initialCategories = [
@@ -22,10 +21,30 @@ const initialCategories = [
   },
 ];
 
+const initialStats = [
+  {
+    id: 20001,
+    category: "Medicine",
+    count: 0,
+  },
+  {
+    id: 20002,
+    category: "Exercise",
+    count: 0,
+  },
+  {
+    id: 20003,
+    category: "Food",
+    count: 0,
+  },
+];
+
 function App() {
   const [categories, setCategories] = useState(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [formOpen, setFormOpen] = useState(false);
+  const [stats, setStats] = useState(initialStats);
+  const [statDialogOpen, setStatDialogOpen] = useState(false);
 
   function handleSelectedCategory(category) {
     setSelectedCategory(category.id === selectedCategory?.id ? null : category);
@@ -36,21 +55,24 @@ function App() {
   }
 
   function handleUpdateCategory(categoryToUpdate) {
-    console.log(categoryToUpdate);
-
     setCategories(
-      categories.map((category) => {
+      categories.map((category) =>
         category.id === categoryToUpdate.id
           ? {
               ...category,
               count: categoryToUpdate.count,
               frequency: categoryToUpdate.frequency,
             }
-          : category;
-      })
+          : category
+      )
     );
 
     setFormOpen(false);
+    setSelectedCategory(null);
+  }
+
+  function handleStatDialog() {
+    setStatDialogOpen(!statDialogOpen);
   }
 
   return (
@@ -69,6 +91,12 @@ function App() {
           onCategoryUpdate={handleUpdateCategory}
         />
       </div>
+      <Stats
+        stats={stats}
+        onToggleDialog={handleStatDialog}
+        statDialogOpen={statDialogOpen}
+      />
+      <StatForm stats={stats} statDialogOpen={statDialogOpen} />
     </div>
   );
 }
@@ -76,7 +104,7 @@ function App() {
 function Categories({ categories, onCategorySelect, onToggle, formOpen }) {
   return (
     <div className="categories">
-      <h2>Cooper's Needs</h2>
+      <h2 className="categories-header">Cooper's Needs</h2>
       {categories.map((category) => (
         <Category
           key={category.id}
@@ -189,6 +217,51 @@ function Dialog({ formOpen, categories, onCategoryUpdate }) {
       <button className="submit" type="submit">
         Submit
       </button>
+    </form>
+  );
+}
+
+function Stats({ stats, onToggleDialog, statDialogOpen }) {
+  return (
+    <div>
+      <h2>Cooper's Stats</h2>
+      <button onClick={onToggleDialog}>
+        {statDialogOpen ? "Close Update" : "Update a Stat"}
+      </button>
+      <table className="table">
+        <tr>
+          {stats.map((stat) => (
+            <th>{stat.category}</th>
+          ))}
+        </tr>
+        <tr>
+          {stats.map((stat) => (
+            <td>{stat.count}</td>
+          ))}
+        </tr>
+      </table>
+    </div>
+  );
+}
+
+function StatForm({ stats, statDialogOpen }) {
+  if (!statDialogOpen) return;
+
+  return (
+    <form>
+      <label>Category</label>
+      <select>
+        {stats.map((stat) => (
+          <option>{stat.category}</option>
+        ))}
+      </select>
+      <label>Count</label>
+      <select>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+      </select>
+      <button>Submit</button>
     </form>
   );
 }
