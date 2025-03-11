@@ -22,21 +22,15 @@ const initialCategories = [
 ];
 
 const initialStats = [
-  {
-    id: 20001,
-    category: "Medicine",
-    count: 0,
-  },
-  {
-    id: 20002,
-    category: "Exercise",
-    count: 0,
-  },
-  {
-    id: 20003,
-    category: "Food",
-    count: 0,
-  },
+  { id: 1, date: "3/11/2025", category: "Medicine", count: 1 },
+  { id: 2, date: "3/11/2025", category: "Exercise", count: 4 },
+  { id: 3, date: "3/11/2025", category: "Food", count: 7 },
+  { id: 4, date: "3/12/2025", category: "Medicine", count: 2 },
+  { id: 5, date: "3/12/2025", category: "Exercise", count: 5 },
+  { id: 6, date: "3/12/2025", category: "Food", count: 8 },
+  { id: 7, date: "3/13/2025", category: "Medicine", count: 3 },
+  { id: 8, date: "3/13/2025", category: "Exercise", count: 6 },
+  { id: 9, date: "3/13/2025", category: "Food", count: 9 },
 ];
 
 function App() {
@@ -109,6 +103,7 @@ function App() {
       </div>
       <Stats
         stats={stats}
+        categories={categories}
         onToggleDialog={handleStatDialog}
         statDialogOpen={statDialogOpen}
       />
@@ -241,7 +236,21 @@ function Dialog({ formOpen, categories, onCategoryUpdate }) {
   );
 }
 
-function Stats({ stats, onToggleDialog, statDialogOpen }) {
+function Stats({ stats, categories, onToggleDialog, statDialogOpen }) {
+  const dayOne = "3/11/2025";
+  const dayTwo = "3/12/2025";
+  const dayThree = "3/13/2025";
+
+  const dayOneStats = stats.filter((stat) =>
+    stat.date === dayOne ? stat : ""
+  );
+  const dayTwoStats = stats.filter((stat) =>
+    stat.date === dayTwo ? stat : ""
+  );
+  const dayThreeStats = stats.filter((stat) =>
+    stat.date === dayThree ? stat : ""
+  );
+
   return (
     <div>
       <h2>Cooper's Stats</h2>
@@ -251,14 +260,37 @@ function Stats({ stats, onToggleDialog, statDialogOpen }) {
       <table className="table">
         <tbody>
           <tr>
-            {stats.map((stat) => (
-              <th key={stat.id + 10}>{stat.category}</th>
+            <th>Day</th>
+            {categories.map((category) => (
+              <th key={category.id}>{category.category}</th>
             ))}
           </tr>
           <tr>
-            {stats.map((stat) => (
-              <td key={stat.id + 20}>{stat.count}</td>
+            <td key={dayOne}>{dayOne}</td>
+            {dayOneStats.map((stat) => (
+              <td key={stat.id}>{stat.count}</td>
             ))}
+            {/* {stats.map((stat) => (
+              <td key={stat.id}>{stat.category}</td>
+            ))} */}
+          </tr>
+          <tr>
+            <td key={dayTwo}>{dayTwo}</td>
+            {dayTwoStats.map((stat) => (
+              <td key={stat.id}>{stat.count}</td>
+            ))}
+            {/* {stats.map((stat) => (
+              <td key={stat.id}>{stat.category}</td>
+            ))} */}
+          </tr>
+          <tr>
+            <td key={dayThree}>{dayThree}</td>
+            {dayThreeStats.map((stat) => (
+              <td key={stat.id}>{stat.count}</td>
+            ))}
+            {/* {stats.map((stat) => (
+              <td key={stat.id}>{stat.category}</td>
+            ))} */}
           </tr>
         </tbody>
       </table>
@@ -275,7 +307,7 @@ function StatForm({ stats, statDialogOpen, onStatSubmit }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!categoryId || !count) return;
+    if (!categoryId) return;
     onStatSubmit({ categoryId, count });
   }
 
@@ -295,9 +327,8 @@ function StatForm({ stats, statDialogOpen, onStatSubmit }) {
       </select>
       <label>Count</label>
       <select value={count} onChange={(e) => setCount(Number(e.target.value))}>
-        <option value={-1}>-1</option>
         <option value={0} selected="selected">
-          ---
+          0
         </option>
         <option value={1}>1</option>
         <option value={2}>2</option>
