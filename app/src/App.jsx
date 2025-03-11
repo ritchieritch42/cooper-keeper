@@ -72,7 +72,8 @@ function App() {
   function handleStatSubmit(statToUpdate) {
     setStats(
       stats.map((stat) =>
-        stat.id === statToUpdate.categoryId
+        stat.category === statToUpdate.categorySelected &&
+        stat.date === statToUpdate.date
           ? {
               ...stat,
               count: statToUpdate.count,
@@ -109,6 +110,7 @@ function App() {
       />
       <StatForm
         stats={stats}
+        categories={categories}
         statDialogOpen={statDialogOpen}
         onStatSubmit={handleStatSubmit}
       />
@@ -298,38 +300,51 @@ function Stats({ stats, categories, onToggleDialog, statDialogOpen }) {
   );
 }
 
-function StatForm({ stats, statDialogOpen, onStatSubmit }) {
-  const [categoryId, setCategoryId] = useState(0);
+function StatForm({ stats, categories, statDialogOpen, onStatSubmit }) {
+  const [categorySelected, setCategorySelected] = useState("");
   const [count, setCount] = useState(0);
+  const [date, setDate] = useState("3/11/2025");
+
+  const dayOne = "3/11/2025";
+  const dayTwo = "3/12/2025";
+  const dayThree = "3/13/2025";
+
+  const days = [dayOne, dayTwo, dayThree];
 
   if (!statDialogOpen) return;
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!categoryId) return;
-    onStatSubmit({ categoryId, count });
+    if (!categorySelected) return;
+    onStatSubmit({ date, categorySelected, count });
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      <label>Date</label>
+      <select value={date} onChange={(e) => setDate(e.target.value)}>
+        {days.map((day) => (
+          <option value={day} key={day}>
+            {day}
+          </option>
+        ))}
+      </select>
       <label>Category</label>
       <select
-        value={categoryId}
-        onChange={(e) => setCategoryId(Number(e.target.value))}
+        value={categorySelected}
+        onChange={(e) => setCategorySelected(e.target.value)}
       >
         <option value="">---</option>
-        {stats.map((stat) => (
-          <option key={stat.id} value={stat.id}>
-            {stat.category}
+        {categories.map((category) => (
+          <option key={category.id} value={category.category}>
+            {category.category}
           </option>
         ))}
       </select>
       <label>Count</label>
       <select value={count} onChange={(e) => setCount(Number(e.target.value))}>
-        <option value={0} selected="selected">
-          0
-        </option>
+        <option value={0}>0</option>
         <option value={1}>1</option>
         <option value={2}>2</option>
         <option value={3}>3</option>
