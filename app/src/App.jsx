@@ -75,6 +75,22 @@ function App() {
     setStatDialogOpen(!statDialogOpen);
   }
 
+  function handleStatSubmit(statToUpdate) {
+    setStats(
+      stats.map((stat) =>
+        stat.id === statToUpdate.categoryId
+          ? {
+              ...stat,
+              count: statToUpdate.count,
+            }
+          : stat
+      )
+    );
+
+    console.log(statToUpdate);
+    setStatDialogOpen(false);
+  }
+
   return (
     <div className="app">
       <Categories
@@ -96,7 +112,11 @@ function App() {
         onToggleDialog={handleStatDialog}
         statDialogOpen={statDialogOpen}
       />
-      <StatForm stats={stats} statDialogOpen={statDialogOpen} />
+      <StatForm
+        stats={stats}
+        statDialogOpen={statDialogOpen}
+        onStatSubmit={handleStatSubmit}
+      />
     </div>
   );
 }
@@ -229,34 +249,56 @@ function Stats({ stats, onToggleDialog, statDialogOpen }) {
         {statDialogOpen ? "Close Update" : "Update a Stat"}
       </button>
       <table className="table">
-        <tr>
-          {stats.map((stat) => (
-            <th>{stat.category}</th>
-          ))}
-        </tr>
-        <tr>
-          {stats.map((stat) => (
-            <td>{stat.count}</td>
-          ))}
-        </tr>
+        <tbody>
+          <tr>
+            {stats.map((stat) => (
+              <th key={stat.id + 10}>{stat.category}</th>
+            ))}
+          </tr>
+          <tr>
+            {stats.map((stat) => (
+              <td key={stat.id + 20}>{stat.count}</td>
+            ))}
+          </tr>
+        </tbody>
       </table>
     </div>
   );
 }
 
-function StatForm({ stats, statDialogOpen }) {
+function StatForm({ stats, statDialogOpen, onStatSubmit }) {
+  const [categoryId, setCategoryId] = useState(0);
+  const [count, setCount] = useState(0);
+
   if (!statDialogOpen) return;
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!categoryId || !count) return;
+    onStatSubmit({ categoryId, count });
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <label>Category</label>
-      <select>
+      <select
+        value={categoryId}
+        onChange={(e) => setCategoryId(Number(e.target.value))}
+      >
+        <option value="">---</option>
         {stats.map((stat) => (
-          <option>{stat.category}</option>
+          <option key={stat.id} value={stat.id}>
+            {stat.category}
+          </option>
         ))}
       </select>
       <label>Count</label>
-      <select>
+      <select value={count} onChange={(e) => setCount(Number(e.target.value))}>
+        <option value={-1}>-1</option>
+        <option value={0} selected="selected">
+          ---
+        </option>
         <option value={1}>1</option>
         <option value={2}>2</option>
         <option value={3}>3</option>
