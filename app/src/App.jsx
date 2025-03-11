@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 
 const initialCategories = [
   {
@@ -39,6 +40,9 @@ function App() {
   const [formOpen, setFormOpen] = useState(false);
   const [stats, setStats] = useState(initialStats);
   const [statDialogOpen, setStatDialogOpen] = useState(false);
+
+  // https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+  const dates = [...new Set(stats.map((stat) => stat.date))];
 
   function handleSelectedCategory(category) {
     setSelectedCategory(category.id === selectedCategory?.id ? null : category);
@@ -103,13 +107,14 @@ function App() {
         />
       </div>
       <Stats
+        dates={dates}
         stats={stats}
         categories={categories}
         onToggleDialog={handleStatDialog}
         statDialogOpen={statDialogOpen}
       />
       <StatForm
-        stats={stats}
+        dates={dates}
         categories={categories}
         statDialogOpen={statDialogOpen}
         onStatSubmit={handleStatSubmit}
@@ -238,10 +243,10 @@ function Dialog({ formOpen, categories, onCategoryUpdate }) {
   );
 }
 
-function Stats({ stats, categories, onToggleDialog, statDialogOpen }) {
-  const dayOne = "3/11/2025";
-  const dayTwo = "3/12/2025";
-  const dayThree = "3/13/2025";
+function Stats({ stats, dates, categories, onToggleDialog, statDialogOpen }) {
+  const dayOne = dates[0];
+  const dayTwo = dates[1];
+  const dayThree = dates[2];
 
   const dayOneStats = stats.filter((stat) =>
     stat.date === dayOne ? stat : ""
@@ -300,7 +305,7 @@ function Stats({ stats, categories, onToggleDialog, statDialogOpen }) {
   );
 }
 
-function StatForm({ stats, categories, statDialogOpen, onStatSubmit }) {
+function StatForm({ categories, statDialogOpen, onStatSubmit }) {
   const [categorySelected, setCategorySelected] = useState("");
   const [count, setCount] = useState(0);
   const [date, setDate] = useState("3/11/2025");

@@ -1,150 +1,106 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-}
-
 body {
   background-color: #2c3930;
+  color: white;
   font-family: Arial, sans-serif;
   margin: 0;
-  display: flex;
-  height: 100vh;
+  padding: 0;
 }
 
 .app {
-  flex: 1;
-  display: flex;
-  align-items: flex-start; /* Align items to the start vertically */
-  justify-content: space-evenly;
-  /* padding-left: 200px; Offset for fixed categories */
-  gap: 20px; /* Add spacing between the data and dialog forms */
-}
-
-.categories {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #3f4f44;
   padding: 20px;
-  gap: 20px;
 }
 
-.categories-header {
+h2 {
+  color: #a27b5c;
+}
+
+button {
+  background-color: #3f4f44;
+  color: white;
+  border: 2px solid transparent;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s, border 0.3s;
+}
+
+button:hover {
+  background-color: #a27b5c;
+  border: 2px solid #dcd7c9;
+}
+
+.categories {
+  background-color: #3f4f44;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
   color: white;
 }
 
 .category {
-  background-color: #3f4f44;
-  color: #dcd7c9;
-  border: 1px solid transparent;
-  padding: 12px 20px;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: border-color 0.25s, transform 0.2s ease;
-  min-width: 150px;
-  text-align: center;
+  background-color: #a27b5c;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 .category:hover {
-  border-color: #a27b5c;
+  background-color: #dcd7c9;
+  border: 2px solid #a27b5c;
+  color: black;
 }
 
-.data {
-  background-color: #3f4f44;
-  border-radius: 25px;
-  padding: 20px;
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
-  margin-top: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.cooper-needs {
-  color: #dcd7c9;
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.update-coopers-needs {
-  color: #dcd7c9;
+.dialog,
+form {
   background-color: #2c3930;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  color: white;
 }
 
-.update-coopers-needs:hover {
-  border-color: #a27b5c;
-}
-
-.data-list {
-  color: #dcd7c9;
-  list-style: none;
-  padding: 0;
-  font-size: 1.2rem;
-}
-
-.data-list li {
-  margin: 10px 0;
-}
-
-.dialog {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  height: auto;
-  background-color: #a27b5c;
-  border-radius: 25px;
-}
-
-.dialog-input:focus {
-  outline: none;
+input,
+select {
+  background-color: #3f4f44;
+  color: white;
   border: none;
+  padding: 5px;
+  margin: 5px 0;
+  width: 100%;
+  border-radius: 4px;
 }
 
-.dialog-preface {
-  margin: 10px;
+input::placeholder,
+select {
+  color: white;
 }
 
-.submit {
-  margin: 10px;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  color: white;
+}
+
+.table th,
+.table td {
+  border: 1px solid white;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
   background-color: #3f4f44;
   color: white;
 }
 
-.submit:hover {
-  border-color: white;
-}
-
-@media (max-width: 768px) {
-  .categories {
-    width: 100px;
-  }
-
-  .category {
-    font-size: 0.9rem;
-    min-width: auto;
-  }
-
-  .app {
-    padding-left: 120px;
-    flex-direction: column; /* Stack the forms vertically for smaller screens */
-  }
-
-  .data,
-  .dialog {
-    width: 100%; /* Ensure both forms take full width on small screens */
-  }
+.table td {
+  background-color: #a27b5c;
+  color: white;
 }
