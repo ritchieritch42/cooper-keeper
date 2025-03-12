@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import cooperImage from "./assets/cooper.jpg";
 
 const initialCategories = [
   {
@@ -53,6 +54,8 @@ function App() {
   }
 
   function handleUpdateCategory(categoryToUpdate) {
+    console.log(categoryToUpdate);
+
     setCategories(
       categories.map((category) =>
         category.id === categoryToUpdate.id
@@ -92,6 +95,7 @@ function App() {
 
   return (
     <div className="app">
+      <CooperDetails />
       <Categories
         categories={categories}
         onCategorySelect={handleSelectedCategory}
@@ -198,7 +202,7 @@ function Dialog({ formOpen, categories, onCategoryUpdate }) {
       <label>Category</label>
       <select
         value={categorySelected}
-        onChange={(e) => setCategorySelected(e.target.value)}
+        onChange={(e) => setCategorySelected(Number(e.target.value))}
       >
         {categories.map((category) => (
           <option key={category.id} value={category.id}>
@@ -261,9 +265,6 @@ function Stats({ stats, dates, categories, onToggleDialog, statDialogOpen }) {
   return (
     <div>
       <h2>Cooper's Stats</h2>
-      <button onClick={onToggleDialog}>
-        {statDialogOpen ? "Close Update" : "Update a Stat"}
-      </button>
       <table className="table">
         <tbody>
           <tr>
@@ -301,6 +302,9 @@ function Stats({ stats, dates, categories, onToggleDialog, statDialogOpen }) {
           </tr>
         </tbody>
       </table>
+      <button className="stat-update" onClick={onToggleDialog}>
+        {statDialogOpen ? "Close Update" : "Update a Stat"}
+      </button>
     </div>
   );
 }
@@ -326,7 +330,7 @@ function StatForm({ categories, statDialogOpen, onStatSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="stat-form">
       <label>Date</label>
       <select value={date} onChange={(e) => setDate(e.target.value)}>
         {days.map((day) => (
@@ -353,9 +357,20 @@ function StatForm({ categories, statDialogOpen, onStatSubmit }) {
         <option value={1}>1</option>
         <option value={2}>2</option>
         <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
       </select>
-      <button>Submit</button>
+      <button className="stat-submit">Submit</button>
     </form>
+  );
+}
+
+function CooperDetails() {
+  return (
+    <div>
+      <img src={cooperImage} alt="Cooper" />
+      <h1>Hi! I'm Cooper, a Dachshund mix three year old ball of fun</h1>
+    </div>
   );
 }
 
