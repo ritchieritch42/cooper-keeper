@@ -369,7 +369,7 @@ function CooperDetails() {
   return (
     <div>
       <img src={cooperImage} alt="Cooper" />
-      <h1>Hi! I'm Cooper, a Dachshund mix three year old ball of fun</h1>
+      <h1>Hi! I'm Cooper, a 3-year old Dachshund mix</h1>
     </div>
   );
 }

@@ -5,6 +5,10 @@ body {
   margin: 0;
   padding: 0;
   height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .app {
@@ -143,6 +147,7 @@ img {
   border: none;
   margin: 5px;
   margin-top: 15px;
+  color: white;
 }
 
 .stat-update:hover {
@@ -153,6 +158,8 @@ img {
   background-color: #a27b5c;
   border: none;
   margin: 5px;
+  margin: 5px;
+  color: white;
 }
 
 .stat-submit:hover {
