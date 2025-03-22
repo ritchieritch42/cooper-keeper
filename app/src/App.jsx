@@ -1,6 +1,37 @@
 import { useState } from "react";
 import "./App.css";
-import cooperImage from "./assets/cooper.jpg";
+import { CooperDetails } from "./CooperDetails.jsx";
+
+{
+  /* <CooperDetails />
+      <Categories
+        categories={categories}
+        onCategorySelect={handleSelectedCategory}
+        onToggle={handleToggle}
+        formOpen={formOpen}
+      />
+      <div>
+        <Data category={selectedCategory} />
+        <Dialog
+          formOpen={formOpen}
+          categories={categories}
+          onCategoryUpdate={handleUpdateCategory}
+        />
+      </div>
+      <Stats
+        dates={dates}
+        stats={stats}
+        categories={categories}
+        onToggleDialog={handleStatDialog}
+        statDialogOpen={statDialogOpen}
+      />
+      <StatForm
+        dates={dates}
+        categories={categories}
+        statDialogOpen={statDialogOpen}
+        onStatSubmit={handleStatSubmit}
+      /> */
+}
 
 const initialCategories = [
   {
@@ -353,24 +384,12 @@ function StatForm({ categories, statDialogOpen, onStatSubmit }) {
       </select>
       <label>Count</label>
       <select value={count} onChange={(e) => setCount(Number(e.target.value))}>
-        <option value={0}>0</option>
-        <option value={1}>1</option>
-        <option value={2}>2</option>
-        <option value={3}>3</option>
-        <option value={4}>4</option>
-        <option value={5}>5</option>
+        {Array.from({ length: 5 }, (_, i) => i + 1).map((element) => (
+          <option value={element}>{element}</option>
+        ))}
       </select>
       <button className="stat-submit">Submit</button>
     </form>
-  );
-}
-
-function CooperDetails() {
-  return (
-    <div>
-      <img src={cooperImage} alt="Cooper" />
-      <h1>Hi! I'm Cooper, a 3-year old Dachshund mix</h1>
-    </div>
   );
 }
 
