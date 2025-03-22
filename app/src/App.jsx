@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import CooperDetails from "./CooperDetails.jsx";
+import Category from "./Category.jsx";
 import Categories from "./Categories.jsx";
 import CategoryData from "./CategoryData.jsx";
 import CategoryDialog from "./CategoryDialog.jsx";
@@ -67,12 +68,16 @@ export default function App() {
   return (
     <div className="app">
       <CooperDetails />
-      <Categories
-        categories={categories}
-        onCategorySelect={handleSelectedCategory}
-        onToggle={handleToggle}
-        formOpen={formOpen}
-      />
+      <Categories onToggle={handleToggle} formOpen={formOpen}>
+        {categories.map((category) => (
+          <Category
+            key={category.id}
+            name={category.category}
+            category={category}
+            onCategorySelect={handleSelectedCategory}
+          />
+        ))}
+      </Categories>
       <div>
         <CategoryData category={selectedCategory} />
         <CategoryDialog
