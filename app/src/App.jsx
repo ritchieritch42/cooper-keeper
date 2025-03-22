@@ -5,6 +5,7 @@ import Category from "./Category.jsx";
 import Categories from "./Categories.jsx";
 import CategoryData from "./CategoryData.jsx";
 import CategoryDialog from "./CategoryDialog.jsx";
+import CategoriesSelect from "./CategoriesSelect.jsx";
 import Stats from "./Stats.jsx";
 import StatsDialog from "./StatsDialog.jsx";
 import { initialCategories, initialStats } from "./InitialData.js";
@@ -12,6 +13,7 @@ import { initialCategories, initialStats } from "./InitialData.js";
 export default function App() {
   const [categories, setCategories] = useState(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [categorySelected, setCategorySelected] = useState(10001);
   const [formOpen, setFormOpen] = useState(false);
   const [stats, setStats] = useState(initialStats);
   const [statDialogOpen, setStatDialogOpen] = useState(false);
@@ -84,7 +86,13 @@ export default function App() {
           formOpen={formOpen}
           categories={categories}
           onCategoryUpdate={handleUpdateCategory}
-        />
+        >
+          <CategoriesSelect
+            categories={categories}
+            categorySelected={categorySelected}
+            setCategorySelected={setCategorySelected}
+          />
+        </CategoryDialog>
       </div>
       <Stats
         dates={dates}

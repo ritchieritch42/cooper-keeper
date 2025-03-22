@@ -2,12 +2,11 @@ import { useState } from "react";
 
 export default function CategoryDialog({
   formOpen,
-  categories,
+  children,
   onCategoryUpdate,
 }) {
   const [count, setCount] = useState("");
   const [frequency, setFrequency] = useState("");
-  const [categorySelected, setCategorySelected] = useState(10001);
 
   if (formOpen === false) return;
 
@@ -28,17 +27,7 @@ export default function CategoryDialog({
       <p className="dialog-preface">
         <em>Count and Frequency Must be Greater than Zero</em>
       </p>
-      <label>Category</label>
-      <select
-        value={categorySelected}
-        onChange={(e) => setCategorySelected(Number(e.target.value))}
-      >
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.category}
-          </option>
-        ))}
-      </select>
+      {children}
       <label>Count</label>
       <input
         className="dialog-input"
